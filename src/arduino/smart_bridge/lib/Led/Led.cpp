@@ -18,13 +18,17 @@ bool Led::isOff(void) {
 }
 
 void Led::switchOn(void) {
-    digitalWrite(pin, HIGH);
-    on = true;
+    if (!on) {
+        digitalWrite(pin, HIGH);
+        on = true;
+    }
 }
 
 void Led::switchOff(void) {
-    digitalWrite(pin, LOW);
-    on = false;
+    if (on) {
+        digitalWrite(pin, LOW);
+        on = false;
+    }
 };
 
 void Led::toggle(void) {

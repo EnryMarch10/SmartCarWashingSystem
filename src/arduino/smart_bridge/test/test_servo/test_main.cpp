@@ -8,8 +8,6 @@
 #define N 10
 
 ServoMotor *pMotor;
-int pos = 0;   
-int delta = 1;
 char buf[10];
 
 void setUp(void) {
@@ -35,16 +33,22 @@ void loop()
     static int i = 0;
     i++;
     pMotor->on();
-    for (int i = 0; i <= 180; i++) {
-        sprintf(buf, "%d", pos);
+    int j = pMotor->readPosition();
+    for (; j < 180; j++) {
+        pMotor->setPosition(j);
+        const int readPos = pMotor->readPosition();
+        sprintf(buf, "%d", readPos);
         TEST_MESSAGE(buf);
-        pMotor->setPosition(pos);         
-        // delay(2);            
-        pos += delta;
+        delay(10);
+    }
+    for (; j > 0; j--) {
+        pMotor->setPosition(j);
+        const int readPos = pMotor->readPosition();
+        sprintf(buf, "%d", readPos);
+        TEST_MESSAGE(buf);
+        delay(10);
     }
     pMotor->off();
-    pos -= delta;
-    delta = -delta;
     delay(1000);
     if (i % 100 == 0) {
         RUN_TEST(empty);

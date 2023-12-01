@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "SonarImpl.h"
 
-#define DEFAULT_TEMP 20
+#define DEFAULT_TEMP 20 // ° C
 
 static void _init_vs(float *vs, float *tempOld, float tempNew) {
     *tempOld = tempNew;
@@ -26,11 +26,11 @@ SonarImpl::SonarImpl(const int trigPin, const int echoPin, const float temperatu
 }
 
 float SonarImpl::getDistance(void) {
-    digitalWrite(trigPin,LOW);
+    digitalWrite(trigPin, LOW);
     delayMicroseconds(3);
-    digitalWrite(trigPin,HIGH);
+    digitalWrite(trigPin, HIGH);
     delayMicroseconds(5);
-    digitalWrite(trigPin,LOW);
+    digitalWrite(trigPin, LOW);
 
     /* Receiving the echo */
     float tUS = pulseIn(echoPin, HIGH);

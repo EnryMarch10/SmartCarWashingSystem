@@ -1,5 +1,10 @@
+/**
+ * General configuration file that defines run options and pins of the sensors in current circuit.
+*/
 #ifndef __CONFIG__
 #define __CONFIG__
+
+#include "run.h"
 
 #define PIN_GREEN_LED_1 8
 #define PIN_RED_LED 12

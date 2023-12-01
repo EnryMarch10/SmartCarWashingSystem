@@ -1,6 +1,8 @@
 #ifndef __BUTTON__
 #define __BUTTON__
 
+#include "run.h"
+
 class Button {
 
 public:
