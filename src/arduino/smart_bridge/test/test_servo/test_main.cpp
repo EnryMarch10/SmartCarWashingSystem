@@ -5,20 +5,23 @@
 
 #include <unity.h>
 
-#define N 10
+#define N 5
 
 ServoMotor *pMotor;
 char buf[10];
 
-void setUp(void) {
+void setUp(void)
+{
     // set stuff up here
 }
 
-void tearDown(void) {
+void tearDown(void)
+{
     // clean stuff up here
 }
 
-void empty(void) {
+void empty(void)
+{
     TEST_ASSERT_TRUE(true);
 }
 

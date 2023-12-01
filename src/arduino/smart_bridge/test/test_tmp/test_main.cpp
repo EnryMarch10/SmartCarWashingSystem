@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include "config.h"
-#include "TemperatureSensorImpl.h"
+#include "TemperatureSensorTMP32.h"
 
 #include <unity.h>
 
@@ -9,22 +9,25 @@
 TemperatureSensor *temperature;
 char buf[10];
 
-void setUp(void) {
+void setUp(void)
+{
     // set stuff up here
 }
 
-void tearDown(void) {
+void tearDown(void)
+{
     // clean stuff up here
 }
 
-void empty(void) {
+void empty(void)
+{
     TEST_ASSERT_TRUE(true);
 }
 
 void setup()
 {
     UNITY_BEGIN();
-    temperature = new TemperatureSensorImpl(PIN_TMP36);
+    temperature = new TemperatureSensorTMP32(PIN_TMP36);
 }
 
 void loop()

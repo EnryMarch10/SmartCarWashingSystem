@@ -9,6 +9,7 @@ public:
     PrintTask(void);  
     void init(const int period);  
     void tick(void);
+    ~PrintTask() {};
 
 private:
     int count;

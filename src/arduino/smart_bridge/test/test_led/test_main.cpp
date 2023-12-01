@@ -9,15 +9,18 @@
 Light *led;
 int state = LOW;
 
-void setUp(void) {
+void setUp(void)
+{
     // set stuff up here
 }
 
-void tearDown(void) {
+void tearDown(void)
+{
     // clean stuff up here
 }
 
-void led_state(void) {
+void led_state(void)
+{
     TEST_ASSERT_EQUAL(state, digitalRead(PIN_RED_LED));
 }
 

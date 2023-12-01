@@ -1,37 +1,50 @@
 #include "Led.h"
 #include "Arduino.h"
 
-Led::Led(const int pin) {
+Led::Led(const int pin)
+{
     this->pin = pin;
-    pinMode(pin, OUTPUT);
+    pinMode(this->pin, OUTPUT);
+    setLow();
+}
+
+void Led::setHigh(void)
+{
+    digitalWrite(pin, HIGH);
+    doToggle = &Led::setLow;
+}
+
+void Led::setLow(void)
+{
     digitalWrite(pin, LOW);
-    on = false;
+    doToggle = &Led::setHigh;
 }
 
 bool Led::isOn(void)
 {
-    return on;
+    return doToggle != &Led::setHigh;
 }
 
-bool Led::isOff(void) {
-    return !(this->isOn());
+bool Led::isOff(void)
+{
+    return !isOn();
 }
 
-void Led::switchOn(void) {
-    if (!on) {
-        digitalWrite(pin, HIGH);
-        on = true;
+void Led::switchOn(void)
+{
+    if (!isOn()) {
+        setHigh();
     }
 }
 
-void Led::switchOff(void) {
-    if (on) {
-        digitalWrite(pin, LOW);
-        on = false;
+void Led::switchOff(void)
+{
+    if (isOn()) {
+        setLow();
     }
 };
 
-void Led::toggle(void) {
-    digitalWrite(pin, on ? LOW: HIGH);
-    on = !on;
+void Led::toggle(void)
+{
+    (*this.*doToggle)();
 };

@@ -10,15 +10,18 @@
 ButtonImpl *btn;
 char message[100];
 
-void setUp(void) {
+void setUp(void)
+{
     // set stuff up here
 }
 
-void tearDown(void) {
+void tearDown(void)
+{
     // clean stuff up here
 }
 
-void test_empty(void) {
+void test_empty(void)
+{
     TEST_ASSERT_TRUE(true);
 }
 

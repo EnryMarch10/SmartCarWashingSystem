@@ -15,8 +15,10 @@ public:
     ~Led() {};
 
 private:
+    void setHigh(void);
+    void setLow(void);
     int pin;
-    bool on;
+    void (Led::*doToggle)(void);
 
 };
 

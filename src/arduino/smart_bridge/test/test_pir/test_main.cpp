@@ -4,20 +4,23 @@
 
 #include <unity.h>
 
-#define N 100
+#define N 400
 
 PresenceSensor *pir;
 bool state;
 
-void setUp(void) {
+void setUp(void)
+{
     // set stuff up here
 }
 
-void tearDown(void) {
+void tearDown(void)
+{
     // clean stuff up here
 }
 
-void empty(void) {
+void empty(void)
+{
     TEST_ASSERT_TRUE(true);
 }
 

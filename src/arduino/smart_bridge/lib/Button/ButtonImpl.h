@@ -6,7 +6,7 @@
 class ButtonImpl: public Button {
 
 public:
-    ButtonImpl(int pin);
+    ButtonImpl(const int pin);
     bool isPressed(void);
     ~ButtonImpl() {};
 

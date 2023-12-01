@@ -1,7 +1,7 @@
 #ifndef __TEMPERATURE_SENSOR__
 #define __TEMPERATURE_SENSOR__
 
-#include "run.h"
+#include "utils.h"
 
 class TemperatureSensor {
 

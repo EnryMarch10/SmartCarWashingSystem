@@ -10,15 +10,18 @@ Sonar *sonar;
 char buf[10];
 char tmp_buf[5];
 
-void setUp(void) {
+void setUp(void)
+{
     // set stuff up here
 }
 
-void tearDown(void) {
+void tearDown(void)
+{
     // clean stuff up here
 }
 
-void empty(void) {
+void empty(void)
+{
     TEST_ASSERT_TRUE(true);
 }
 

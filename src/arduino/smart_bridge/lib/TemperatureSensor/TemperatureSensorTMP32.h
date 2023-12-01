@@ -3,12 +3,12 @@
 
 #include "TemperatureSensor.h"
 
-class TemperatureSensorImpl: public TemperatureSensor {
+class TemperatureSensorTMP32: public TemperatureSensor {
 
 public:
-    TemperatureSensorImpl(const int pin);
+    TemperatureSensorTMP32(const int pin);
     float getTemperature(void);
-    ~TemperatureSensorImpl() {};
+    ~TemperatureSensorTMP32() {};
 
 private:
     int pin;

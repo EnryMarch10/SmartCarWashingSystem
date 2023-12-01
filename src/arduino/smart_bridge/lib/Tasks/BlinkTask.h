@@ -8,8 +8,9 @@ class BlinkTask: public Task {
 
 public:
     BlinkTask(const int pin);  
-    void init(const int period);  
+    void init(const int period);
     void tick(void);
+    ~BlinkTask();
 
 private:
     int pin;

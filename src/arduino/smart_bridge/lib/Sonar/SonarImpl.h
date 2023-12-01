@@ -3,11 +3,13 @@
 
 #include "Sonar.h"
 
+#define DETECTION_ERROR -1
+
 class SonarImpl: public Sonar {
 
 public:
     SonarImpl(const int trigPin, const int echoPin);
-    SonarImpl(const int trigPin, const int echoPin, const float temperature);
+    SonarImpl(const int trigPin, const int echoPin, const float environmentTemperature);
     float getDistance(void);
     ~SonarImpl() {};
 
@@ -16,6 +18,9 @@ private:
     int trigPin;
     int echoPin;
     float temperature;
+    /**
+     * Speed of sound.
+    */
     float vs;
 
 };
