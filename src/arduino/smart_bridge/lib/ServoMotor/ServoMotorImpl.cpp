@@ -10,17 +10,18 @@
 
 ServoMotorImpl::ServoMotorImpl(const int pin)
 {
-    this->pin = pin;  
+    this->pin = pin;
+    pMotor = new ServoTimer2();
 } 
 
 void ServoMotorImpl::on(void)
 {
-    motor.attach(pin);    
+    pMotor->attach(pin);    
 }
 
 int ServoMotorImpl::readPosition(void)
 {
-    return map(motor.read(), MIN_PULSE_WIDTH, MAX_PULSE_WIDTH, MIN_ANGLE, MAX_ANGLE);              
+    return map(pMotor->read(), MIN_PULSE_WIDTH, MAX_PULSE_WIDTH, MIN_ANGLE, MAX_ANGLE);              
 }
 
 void ServoMotorImpl::setPosition(const int angle)
@@ -28,10 +29,15 @@ void ServoMotorImpl::setPosition(const int angle)
 #ifdef __DEBUG__
     assert(angle >= MIN_ANGLE && angle <= MAX_ANGLE);
 #endif
-    motor.write(map(angle, MIN_ANGLE, MAX_ANGLE, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH));              
+    pMotor->write(map(angle, MIN_ANGLE, MAX_ANGLE, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH));              
 }
 
 void ServoMotorImpl::off(void)
 {
-    motor.detach();    
+    pMotor->detach();    
+}
+
+ServoMotorImpl::~ServoMotorImpl(void)
+{
+    delete pMotor;
 }

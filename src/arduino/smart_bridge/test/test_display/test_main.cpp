@@ -1,13 +1,12 @@
 #include <Arduino.h>
 #include "config.h"
-
-#include <LiquidCrystal_I2C.h>
+#include "LcdI2C.h"
 
 #include <unity.h>
 
 #define WAIT 4000
 
-LiquidCrystal_I2C lcd = LiquidCrystal_I2C(LCD_ADDRESS, 16, 2);
+Display *pLcd = new LcdI2C(LCD_ADDRESS);
 
 void setUp(void)
 {
@@ -28,15 +27,12 @@ void setup()
 {
     UNITY_BEGIN();
 
-    lcd.init();
-    lcd.backlight();
-    lcd.setCursor(0, 0); // Set the cursor on the third column and first row.
-    lcd.blink();
-    lcd.print("Hello World!");
+    pLcd->init();
+    pLcd->on();
+    pLcd->write("Hello World!");
     delay(WAIT);
-    lcd.noBlink();
-    lcd.clear();
-    lcd.noBacklight();
+    pLcd->off();
+    delete pLcd;
 
     RUN_TEST(empty);
     UNITY_END();
