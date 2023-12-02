@@ -7,13 +7,44 @@
 #include "BlinkTask.h"
 #include "PrintTask.h"
 
+#include "Queue.h"
+
 Scheduler sched;
 Task *t3 = NULL;
 Task *t2 = NULL;
+Queue<void (*)(void)> *queue;
+
+void test1(void)
+{
+    Logger.debug("CIAO1");
+}
+
+void test2(void)
+{
+    Logger.debug("CIAO2");
+}
+
+void test3(void)
+{
+    Logger.debug("CIAO3");
+}
 
 void setup()
 {
     MsgService.init();
+
+    queue = new Queue<void (*)(void)>();
+
+    queue->enqueue(test1);
+    queue->enqueue(test2);
+    queue->enqueue(test3);
+    void (*func)(void) = queue->dequeue();
+    func();
+    func = queue->dequeue();
+    func();
+    delete queue;
+    
+    // queue = new Queue<void (*)(void)>();
     sched.init(50);
 
     Task *t0 = new PrintTask();

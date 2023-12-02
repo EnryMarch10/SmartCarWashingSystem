@@ -71,7 +71,9 @@ void Scheduler::schedule(void)
 
     for (int i = 0; i < nTasks; i++) {
         if (taskList[i]->updateAndCheckTime(basePeriod)) {
-            taskList[i]->tick();
+            if (taskList[i]->isActive()) {
+                taskList[i]->tick();
+            }
         }
     }
 }

@@ -30,9 +30,25 @@ public:
         }
     }
 
-    virtual ~Task() {};
+    // void resume(void)
+    // {
+    //     active = true;
+    // }
+
+    // void stop(void)
+    // {
+    //     active = false;
+    // }
+
+    bool isActive(void)
+    {
+        return active;
+    }
+
+    virtual ~Task() { };
 
 private:
+    bool active = true;
     int myPeriod;
     int timeElapsed;
 
