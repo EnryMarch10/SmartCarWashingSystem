@@ -1,10 +1,6 @@
 #include <Arduino.h>
 #include "ServoMotorImpl.h"
 
-#ifdef __DEBUG__
-    #include <assert.h>
-#endif
-
 #define MIN_ANGLE 0
 #define MAX_ANGLE 180
 

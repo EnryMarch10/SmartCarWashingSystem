@@ -1,5 +1,7 @@
 #include <Arduino.h>
 #include "config.h"
+#include "MsgService.h"
+#include "Logger.h"
 
 #include "Scheduler.h"
 #include "BlinkTask.h"
@@ -11,8 +13,7 @@ Task *t2 = NULL;
 
 void setup()
 {
-    Serial.begin(9600);
-
+    MsgService.init();
     sched.init(50);
 
     Task *t0 = new PrintTask();
@@ -21,9 +22,9 @@ void setup()
     Task *t1 = new BlinkTask(PIN_RED_LED);
     t1->init(300);
 
-    Serial.println("Adding print");
+    Logger.debug("Adding print");
     sched.addTask(t0);
-    Serial.println("Adding blink 1");
+    Logger.debug("Adding blink 1");
     sched.addTask(t1);
 
     t2 = new BlinkTask(PIN_GREEN_LED_1);
@@ -31,7 +32,7 @@ void setup()
     t3 = new BlinkTask(PIN_GREEN_LED_2);
     t3->init(150);
 
-    Serial.println("Adding blink 3");
+    Logger.debug("Adding blink 3");
     sched.addTask(t3);
 }
 
@@ -42,10 +43,10 @@ void loop()
     static bool state = true;
     if (state && millis() - start_time > 4000) {
         if (digitalRead(PIN_GREEN_LED_2) == HIGH) {
-            Serial.println("Deleting t3");
+            Logger.debug("Deleting t3");
             sched.removeTask(t3);
             state = false;
-            Serial.println("Adding blink 2");
+            Logger.debug("Adding blink 2");
             sched.addTask(t2);
         }
     }

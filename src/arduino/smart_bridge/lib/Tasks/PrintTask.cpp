@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include "PrintTask.h"
+#include "Logger.h"
 
 PrintTask::PrintTask(void) {}
   
@@ -12,5 +13,5 @@ void PrintTask::init(const int period)
 void PrintTask::tick(void)
 {
     count++;
-    Serial.println("fire " + String(count) + " millis: " + String(millis()));
+    Logger.debug("fire " + String(count) + " millis: " + String(millis()));
 }

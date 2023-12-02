@@ -6,6 +6,10 @@
 
 #define __DEBUG__
 
+#ifdef __DEBUG__
+    #include <assert.h>
+#endif
+
 #define XOR_SWAP(X, Y)  {\
                             (X) ^= (Y);\
                             (Y) ^= (X);\
@@ -17,5 +21,7 @@
                                 (X) = (Y);\
                                 (Y) = (tmp);\
                             }
+
+#define BAUD_RATE 9600
 
 #endif
