@@ -51,6 +51,8 @@
 
 #define MAX_T 40 // °C
 
+// #define __SIMULATE_MALFUNCTIONING__
+
 /**
  * Initializes the sensors/actuators using the configured pins.
 */

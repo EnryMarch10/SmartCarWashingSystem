@@ -42,6 +42,6 @@ public:
 
 };
 
-extern MsgServiceClass MsgService;
+extern MsgServiceClass MyMsgService;
 
 #endif

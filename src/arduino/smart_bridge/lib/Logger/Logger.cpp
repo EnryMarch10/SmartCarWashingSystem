@@ -6,17 +6,17 @@ Logger MyLogger;
 
 void Logger::log(const String &msg)
 {
-    MsgService.sendMsg("log: " + msg);
+    MyMsgService.sendMsg("log> " + msg);
 }
 
 void Logger::debug(const String &msg)
 {
 #ifdef __DEBUG__
-    MsgService.sendMsg("debug: " + msg);
+    MsgService.sendMsg("debug> " + msg);
 #endif
 }
 
 void Logger::flush(void)
 {
-    MsgService.flush();
+    MyMsgService.flush();
 }

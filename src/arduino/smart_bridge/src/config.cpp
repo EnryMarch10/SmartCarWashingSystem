@@ -25,7 +25,7 @@ static Queue<unsigned char> interrupts = Queue<unsigned char>();
 
 void init_config(void)
 {
-    MsgService.init();
+    MyMsgService.init();
     lcd.init();
 }
 

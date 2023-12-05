@@ -6,7 +6,7 @@
 
 #include <Arduino.h>
 
-#define __DEBUG__
+// #define __DEBUG__
 
 #ifdef __DEBUG__
     #include <assert.h>

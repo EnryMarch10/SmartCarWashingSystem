@@ -18,6 +18,7 @@ public:
     ~MonitorTask(void);
 
 private:
+    long startErrorTime;
     unsigned int errorTime;
     PeriodicTask *pCountDownTask;
     PeriodicTask *pBlinkTask;

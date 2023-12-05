@@ -5,7 +5,7 @@
 
 static String content;
 
-MsgServiceClass MsgService;
+MsgServiceClass MyMsgService;
 
 bool MsgServiceClass::isMsgAvailable(void)
 {
@@ -49,8 +49,8 @@ void serialEvent(void)
     while (Serial.available()) {
         char c = (char) Serial.read();
         if (c == '\n') {
-            MsgService.currentMsg = new Msg(content);
-            MsgService.msgAvailable = true;     
+            MyMsgService.currentMsg = new Msg(content);
+            MyMsgService.msgAvailable = true;     
         } else {
             content += c; 
         }
