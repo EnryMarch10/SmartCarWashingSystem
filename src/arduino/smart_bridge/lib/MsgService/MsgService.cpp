@@ -1,4 +1,3 @@
-#include <Arduino.h>
 #include "MsgService.h"
 #include "utils.h"
 
@@ -36,8 +35,13 @@ void MsgServiceClass::init(void)
 }
 
 void MsgServiceClass::sendMsg(const String &msg)
-{
+{ 
     Serial.println(msg);
+}
+
+void MsgServiceClass::flush(void)
+{ 
+    Serial.flush();
 }
 
 void serialEvent(void)

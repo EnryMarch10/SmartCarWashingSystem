@@ -1,5 +1,7 @@
-#ifndef __MSGSERVICE__
-#define __MSGSERVICE__
+#ifndef __MSG_SERVICE__
+#define __MSG_SERVICE__
+
+#include "utils.h"
 
 class Msg {
     String content;
@@ -36,6 +38,7 @@ public:
     Msg *receiveMsg();
     Msg *receiveMsg(Pattern &pattern);
     void sendMsg(const String &msg);
+    void flush(void);
 
 };
 

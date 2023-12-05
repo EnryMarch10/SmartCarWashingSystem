@@ -1,15 +1,22 @@
 #include "Logger.h"
-#include "MsgService.h"
 #include "utils.h"
+#include "MsgService.h"
 
-void LoggerService::log(const String& msg)
+Logger MyLogger;
+
+void Logger::log(const String &msg)
 {
     MsgService.sendMsg("log: " + msg);
 }
 
-void LoggerService::debug(const String& msg)
+void Logger::debug(const String &msg)
 {
 #ifdef __DEBUG__
     MsgService.sendMsg("debug: " + msg);
 #endif
+}
+
+void Logger::flush(void)
+{
+    MsgService.flush();
 }

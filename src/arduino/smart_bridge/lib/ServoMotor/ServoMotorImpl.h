@@ -8,14 +8,21 @@ class ServoMotorImpl: public ServoMotor {
 
 public:
     ServoMotorImpl(const int pin);
+    // SERVO MOTOR
     void on(void);
     int readPosition(void);
     void setPosition(const int angle);
     void off(void);
-    ~ServoMotorImpl() {};
+    // GATE
+    bool open(void);
+    bool close(void);
+    ~ServoMotorImpl();
 
 private:
+    bool isFullyOpen(void);
+    bool isFullyClose(void);
     int pin;
+    int angle;
     ServoTimer2 *pMotor;
 
 };

@@ -1,4 +1,3 @@
-#include <Arduino.h>
 #include "SonarImpl.h"
 
 #define DEFAULT_TEMP 20 // ° C

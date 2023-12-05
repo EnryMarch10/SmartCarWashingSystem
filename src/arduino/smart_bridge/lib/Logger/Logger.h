@@ -1,16 +1,17 @@
 #ifndef __LOGGER__
 #define __LOGGER__
 
-#include <Arduino.h>
+#include "utils.h"
 
-class LoggerService {
+class Logger {
 
 public:
     void log(const String &msg);
     void debug(const String &msg);
+    void flush(void);
 
 };
 
-extern LoggerService Logger;
+extern Logger MyLogger;
 
 #endif

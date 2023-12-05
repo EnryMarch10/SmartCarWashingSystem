@@ -1,4 +1,3 @@
-#include <Arduino.h>
 #include "PresenceSensorImpl.h"
 
 PresenceSensorImpl::PresenceSensorImpl(const int pin)

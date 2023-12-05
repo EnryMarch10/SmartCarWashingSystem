@@ -14,10 +14,12 @@ public:
     char getColumns(void);
     void on(void);
     void off(void);
-    void write(const char *string);
+    void clear(void);
+    void write(const String &string);
     ~LcdI2C(void);
 
 private:
+    enum {ON, OFF} state;
     char rows;
     char columns;
     LiquidCrystal_I2C *pLcd;

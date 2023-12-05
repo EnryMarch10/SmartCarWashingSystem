@@ -1,4 +1,3 @@
-#include <Arduino.h>
 #include "TemperatureSensorTMP32.h"
 
 #define VOLTAGE 5.0

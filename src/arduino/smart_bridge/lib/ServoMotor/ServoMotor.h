@@ -2,8 +2,9 @@
 #define __SERVO_MOTOR__
 
 #include "utils.h"
+#include "Gate.h"
 
-class ServoMotor {
+class ServoMotor: public Gate {
 
 public:
     /**
