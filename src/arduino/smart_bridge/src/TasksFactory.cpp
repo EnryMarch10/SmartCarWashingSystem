@@ -1,4 +1,3 @@
-#include "config.h"
 #include "TasksFactory.h"
 
 #include "Tasks/BlinkTask.h"

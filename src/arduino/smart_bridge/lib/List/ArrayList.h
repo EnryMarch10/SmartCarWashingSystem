@@ -5,6 +5,7 @@
 
 template<typename T>
 class ArrayList {
+
 public:
     ArrayList(void);
     T operator[](const int i);

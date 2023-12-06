@@ -29,7 +29,6 @@ private:
     void runPeriodicTasks(void);
     void runAperiodicTasks(void);
     bool removePeriodicTask(PeriodicTask *task);
-    const __FlashStringHelper *const getName(void);
 
 };
 

@@ -12,6 +12,8 @@ public:
     CountDownTask(Display *pDisplay, const unsigned char cycles);
     const __FlashStringHelper *const getName(void) { return F("T_COUNT_DOWN"); }
     void laterInit(void);
+    void inStop(void);
+    void inResume(void);
     void tick(void);
     void update(Task *pTask) { }
     ~CountDownTask(void);

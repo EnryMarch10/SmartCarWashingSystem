@@ -18,12 +18,7 @@ MonitorTask::MonitorTask(PeriodicTask *pCountDownTask,
     lastT = -1;
 }
 
-void MonitorTask::laterInit(void)
-{
-    if (numWashes != 0) {
-        MyLogger.log(String(F("washes =")) + numWashes);
-    }
-}
+void MonitorTask::laterInit(void) { }
 
 void MonitorTask::tick(void)
 {
@@ -35,7 +30,7 @@ void MonitorTask::tick(void)
         MyLogger.log(String(F("temperature = ")) + actualT);
         lastT = actualT;
     } else {
-        MyLogger.debug(String(getName()) + F(": temperature = ") + actualT);
+        MyLogger.debug(getPrefix() + F("temperature = ") + actualT);
     }
     switch (state)
     {
@@ -59,25 +54,22 @@ void MonitorTask::tick(void)
                     state = ERROR;
                 }
 #else
-                pDisplay->on();
-                pDisplay->write(F("Detected a Problem - Please Wait"));
                 pCountDownTask->stop();
                 pBlinkTask->stop();
+                pDisplay->on();
                 MyLogger.log(F("Maintenance Required"));
+                pDisplay->write(F("Detected a Problem - Please Wait"));
                 state = ERROR;
 #endif
             }
             break;
         case ERROR:
-            if (actualT <= MAX_T) {
-                state = OK;
-                pDisplay->off();
-            } else if (MyMsgService.isMsgAvailable()) {
+            if (MyMsgService.isMsgAvailable()) {
                 Msg* msg = MyMsgService.receiveMsg();    
                 if (msg->getContent() == F("Maintenance done")) {
                     pDisplay->off();
-                    pCountDownTask->resume();
                     pBlinkTask->resume();
+                    pCountDownTask->resume();
                     state = OK;
 #ifdef __SIMULATE_MALFUNCTIONING__
                     tmp = 1;
@@ -92,4 +84,5 @@ void MonitorTask::tick(void)
 MonitorTask::~MonitorTask(void)
 {
     numWashes++;
+    MyLogger.log(String(F("washes = ")) + numWashes);
 }

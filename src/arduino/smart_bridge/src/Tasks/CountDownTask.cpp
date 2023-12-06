@@ -16,6 +16,16 @@ void CountDownTask::laterInit(void)
     MyScheduler.addPeriodicTask(pMonitorTask);
 }
 
+void CountDownTask::inStop(void)
+{
+    pDisplay->off();
+}
+
+void CountDownTask::inResume(void)
+{
+    pDisplay->on();
+}
+
 void CountDownTask::tick(void)
 {
     cycles--;

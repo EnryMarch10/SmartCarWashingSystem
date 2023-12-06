@@ -44,14 +44,18 @@
 #define N4 N2 // ms
 #define N5 5000 // ms
 
-#define BUTTON_SAMPLING_PERIOD 150 // ms
+#define BUTTON_SAMPLING_PERIOD 200 // ms
 
 #define MIN_DIST 0.10 // m
 #define MAX_DIST 0.20 // m
 
-#define MAX_T 40 // °C
-
 // #define __SIMULATE_MALFUNCTIONING__
+
+#ifdef __SIMULATE_MALFUNCTIONING__
+#define MAX_T 10 // °C, for example, however under the environment temperature
+#else
+#define MAX_T 40 // °C
+#endif
 
 /**
  * Initializes the sensors/actuators using the configured pins.

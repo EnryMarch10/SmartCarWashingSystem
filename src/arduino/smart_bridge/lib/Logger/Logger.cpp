@@ -12,7 +12,7 @@ void Logger::log(const String &msg)
 void Logger::debug(const String &msg)
 {
 #ifdef __DEBUG__
-    MsgService.sendMsg("debug> " + msg);
+    MyMsgService.sendMsg("debug> " + msg);
 #endif
 }
 

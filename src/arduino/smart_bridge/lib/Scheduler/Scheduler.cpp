@@ -6,9 +6,20 @@ Scheduler MyScheduler;
 
 volatile bool timerFlag;
 
+
+static const __FlashStringHelper *const getName(void)
+{
+    return F("SCHEDULER");
+}
+
+static String getPrefix(void)
+{
+    return String(getName()) + F(": ");
+}
+
 static void _timer_handler(void)
 {
-    // MyLogger.debug(String(F("Scheduler time = ")) + millis());
+    // MyLogger.debug(getPrefix() + F("Scheduler time = ")) + millis());
     timerFlag = true;
 }
 
@@ -16,7 +27,8 @@ static void _print_task_list(PeriodicTask **task, const unsigned char size)
 {
 #ifdef __DEBUG__
     const __FlashStringHelper *separator = F("-------------------------------------------");
-    MyLogger.debug(F("Periodic tasks:"));
+    MyLogger.debug(separator);
+    MyLogger.debug(getPrefix() + F("periodic tasks:"));
     MyLogger.debug(separator);
     for (int i = 0; i < size; i++) {
         MyLogger.debug(String(F("periodic[")) + i + F("] = ") + task[i]->getName());
@@ -27,19 +39,14 @@ static void _print_task_list(PeriodicTask **task, const unsigned char size)
 
 Scheduler::Scheduler(void)
 {
-    MyLogger.debug(String(getName()) + F(": born"));
+    MyLogger.debug(getPrefix() + F("born"));
     askedToDieQueue = new Queue<PeriodicTask *>();
     aTaskQueue = new Queue<AperiodicTask *>();
 }
 
-const __FlashStringHelper *const Scheduler::getName(void)
-{
-    return F("SCHEDULER");
-}
-
 void Scheduler::init(const int basePeriod)
 {
-    MyLogger.debug(String(getName()) + F(": init"));
+    MyLogger.debug(getPrefix() + F("init"));
     this->basePeriod = basePeriod;
     timerFlag = false;
     long period = 1000l * basePeriod;
@@ -50,14 +57,14 @@ void Scheduler::init(const int basePeriod)
 
 bool Scheduler::addAperiodicTask(AperiodicTask *task)
 {
-    MyLogger.debug(String(getName()) + F(": add aperiodic ") + task->getName());
+    MyLogger.debug(getPrefix() + F("add aperiodic ") + task->getName());
     aTaskQueue->enqueue(task);
     return true;
 }
 
 bool Scheduler::addPeriodicTask(PeriodicTask *task)
 {
-    MyLogger.debug(String(getName()) + F(": add periodic ") + task->getName());
+    MyLogger.debug(getPrefix() + F("add periodic ") + task->getName());
     if (pNTasks >= MAX_PERIODIC_TASKS - 1) {
         return false;
     }
@@ -87,7 +94,7 @@ bool Scheduler::addPeriodicTask(PeriodicTask *task)
 
 bool Scheduler::removePeriodicTask(PeriodicTask *task)
 {
-    MyLogger.debug(String(getName()) + F(": removing ") + task->getName());
+    MyLogger.debug(getPrefix() + F("removing ") + task->getName());
     bool found = false;
     for (int i = 0; i < pNTasks; i++) {
         if (found) {
@@ -109,14 +116,13 @@ bool Scheduler::removePeriodicTask(PeriodicTask *task)
 
 void Scheduler::runPeriodicTasks(void)
 {
-    // Execute if their turn
     for (int i = 0; i < pNTasks; i++) {
         if (pTaskList[i]->updateAndCheckTime(basePeriod)) {
             if (pTaskList[i]->isActive()) {
-                // MyLogger.debug(String(getName()) + F(": executing periodic ")) + pTaskList[i]->getName());
+                // MyLogger.debug(getPrefix() + F("executing periodic ")) + pTaskList[i]->getName());
                 pTaskList[i]->tick();
             } else {
-                MyLogger.debug(String(getName()) + F(": skipped inactive periodic ") + pTaskList[i]->getName());
+                MyLogger.debug(getPrefix() + F("skipped inactive periodic ") + pTaskList[i]->getName());
             }
         }
     }
@@ -124,7 +130,7 @@ void Scheduler::runPeriodicTasks(void)
     // Remove if  asked to die
     while (!askedToDieQueue->isEmpty()) {
         PeriodicTask *pTask = askedToDieQueue->dequeue();
-        MyLogger.debug(String(getName()) + F(": removing periodic ") + pTask->getName());
+        MyLogger.debug(getPrefix() + F("removing periodic ") + pTask->getName());
         removePeriodicTask(pTask);
     }
 }
@@ -133,7 +139,7 @@ void Scheduler::runAperiodicTasks(void)
 {
     while (!aTaskQueue->isEmpty()) {
         Task *task = aTaskQueue->dequeue();
-        MyLogger.debug(String(getName()) + F(": executing aperiodic ") + task->getName());
+        MyLogger.debug(getPrefix() + F("executing aperiodic ") + task->getName());
         task->tick();
         delete task;
     }
@@ -152,13 +158,13 @@ void Scheduler::schedule(void)
 void Scheduler::taskReadyToDie(PeriodicTask *finished)
 {
     finished->stop();
-    MyLogger.debug(String(getName()) + F(": stopped and put in die queue ") + finished->getName());
+    MyLogger.debug(getPrefix() + F("stopped and put in die queue ") + finished->getName());
     askedToDieQueue->enqueue(finished);
 }
 
 Scheduler::~Scheduler(void)
 {
-    MyLogger.debug(String(getName()) + F(": die!"));
+    MyLogger.debug(getPrefix() + F("die!"));
     for (int i = 0; i < pNTasks; i++) {
         delete pTaskList[i];
     }

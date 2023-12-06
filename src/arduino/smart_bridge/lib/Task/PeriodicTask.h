@@ -13,8 +13,8 @@ public:
 
     void init(const int period)
     {
-        MyLogger.debug(String(getName()) + F(": ") + TASK_INIT);
-        myPeriod = period;  
+        MyLogger.debug(getPrefix() + TASK_INIT);
+        myPeriod = period;
         timeElapsed = 0;
         laterInit();
     }
@@ -39,15 +39,21 @@ public:
 
     void stop(void)
     {
-        MyLogger.debug(String(getName()) + F(": ") + TASK_STOP);
+        MyLogger.debug(getPrefix() + TASK_STOP);
         active = false;
+        inStop();
     }
+
+    virtual void inStop(void) { }
 
     void resume(void)
     {
-        MyLogger.debug(String(getName()) + F(": ") + TASK_RESUME);
+        MyLogger.debug(getPrefix() + TASK_RESUME);
         active = true;
+        inResume();
     }
+
+    virtual void inResume(void) { }
 
     bool isActive(void)
     {

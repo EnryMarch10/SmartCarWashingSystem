@@ -1,8 +1,9 @@
 #ifndef __TASKS_FACTORY__
 #define __TASKS_FACTORY__
 
-// #include "PeriodicTask.h"
-// #include "AperiodicTask.h"
+#include "config.h"
+#include "PeriodicTask.h"
+#include "AperiodicTask.h"
 
 class TasksFactory {
 
