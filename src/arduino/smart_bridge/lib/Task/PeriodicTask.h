@@ -7,13 +7,13 @@
 #include "Logger.h"
 
 class PeriodicTask: public ObservableTask, public TaskObserver {
-  
+
 public:
     virtual void tick(void) = 0;
 
     void init(const int period)
     {
-        MyLogger.debug(getPrefix() + TASK_INIT);
+        MyLogger.debugln(getPrefix() + TASK_INIT);
         myPeriod = period;
         timeElapsed = 0;
         laterInit();
@@ -39,7 +39,7 @@ public:
 
     void stop(void)
     {
-        MyLogger.debug(getPrefix() + TASK_STOP);
+        MyLogger.debugln(getPrefix() + TASK_STOP);
         active = false;
         inStop();
     }
@@ -48,7 +48,7 @@ public:
 
     void resume(void)
     {
-        MyLogger.debug(getPrefix() + TASK_RESUME);
+        MyLogger.debugln(getPrefix() + TASK_RESUME);
         active = true;
         inResume();
     }

@@ -27,10 +27,10 @@ void MonitorTask::tick(void)
 #endif
     const float actualT = pTSensor->getTemperature();
     if (actualT != lastT) {
-        MyLogger.log(String(F("temperature = ")) + actualT);
+        MyLogger.logln(String(F("temperature = ")) + actualT);
         lastT = actualT;
     } else {
-        MyLogger.debug(getPrefix() + F("temperature = ") + actualT);
+        MyLogger.debugln(getPrefix() + F("temperature = ") + actualT);
     }
     switch (state)
     {
@@ -50,14 +50,14 @@ void MonitorTask::tick(void)
                     pDisplay->write(F("Detected a Problem - Please Wait"));
                     pCountDownTask->stop();
                     pBlinkTask->stop();
-                    MyLogger.log(F("Maintenance Required"));
+                    MyLogger.logln(F("Maintenance Required"));
                     state = ERROR;
                 }
 #else
                 pCountDownTask->stop();
                 pBlinkTask->stop();
                 pDisplay->on();
-                MyLogger.log(F("Maintenance Required"));
+                MyLogger.logln(F("Maintenance Required"));
                 pDisplay->write(F("Detected a Problem - Please Wait"));
                 state = ERROR;
 #endif
@@ -84,5 +84,5 @@ void MonitorTask::tick(void)
 MonitorTask::~MonitorTask(void)
 {
     numWashes++;
-    MyLogger.log(String(F("washes = ")) + numWashes);
+    MyLogger.logln(String(F("washes = ")) + numWashes);
 }

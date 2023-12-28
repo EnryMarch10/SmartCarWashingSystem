@@ -23,20 +23,20 @@ void ExitTask::laterInit(void)
 void ExitTask::tick(void)
 {
     static long timeElapsed;
-    MyLogger.debug(getPrefix() + F("car distance = ") + pSonar->getDistance() + F(" m"));
+    MyLogger.debugln(getPrefix() + F("car distance = ") + pSonar->getDistance() + F(" m"));
     switch (carState)
     {
         case IN:
             if (pSonar->getDistance() >= MAX_DIST) {
                 carState = OUT;
                 timeElapsed = millis();
-                MyLogger.debug(getPrefix() + F("CAR OUT"));
+                MyLogger.debugln(getPrefix() + F("CAR OUT"));
             }
             break;
         case OUT:
             if (pSonar->getDistance() < MAX_DIST) {
                 carState = IN;
-                MyLogger.debug(getPrefix() + F("CAR IN"));
+                MyLogger.debugln(getPrefix() + F("CAR IN"));
             } else if (millis() - timeElapsed >= enterTime) {
                 pDisplay->off();
                 pGateCloseTask = MyTasksFactory.createGateCloseTask();

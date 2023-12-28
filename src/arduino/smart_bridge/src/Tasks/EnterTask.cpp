@@ -23,13 +23,13 @@ void EnterTask::laterInit(void)
 void EnterTask::tick(void)
 {
     static long timeElapsed;
-    MyLogger.debug(getPrefix() + F("car distance = ") + pSonar->getDistance() + F(" m"));
+    MyLogger.debugln(getPrefix() + F("car distance = ") + pSonar->getDistance() + F(" m"));
     switch (carState)
     {
         case IN:
             if (pSonar->getDistance() >= MIN_DIST) {
                 carState = OUT;
-                MyLogger.debug(getPrefix() + F("CAR OUT"));
+                MyLogger.debugln(getPrefix() + F("CAR OUT"));
             } else if (millis() - timeElapsed >= enterTime) {
                 pDisplay->off();
                 MyScheduler.taskReadyToDie(this);
@@ -41,7 +41,7 @@ void EnterTask::tick(void)
             if (pSonar->getDistance() < MIN_DIST) {
                 carState = IN;
                 timeElapsed = millis();
-                MyLogger.debug(getPrefix() + F("CAR IN"));
+                MyLogger.debugln(getPrefix() + F("CAR IN"));
             }
             break;
     }

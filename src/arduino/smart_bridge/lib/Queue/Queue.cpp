@@ -22,7 +22,7 @@ bool Queue<T>::isEmpty(void)
 }
 
 template <typename T>
-void Queue<T>::enqueue(const T obj)
+void Queue<T>::enqueue(const T& obj)
 {
     Node* tmp = NULL;
     tmp = (Node *) malloc(sizeof(*tmp));

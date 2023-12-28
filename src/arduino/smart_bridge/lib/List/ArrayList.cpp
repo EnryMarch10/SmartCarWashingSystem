@@ -3,61 +3,78 @@
 
 #include "ArrayList.h"
 
-#define DEFAULT_SIZE 5
-
 template<typename T>
 void ArrayList<T>::checkDimension(void)
 {
     if (arrayElements == arrayLength) {
-        arrayLength *= 2;
+        arrayLength += arrayLength / 2;
         T *newArray = new T[arrayLength];
-
-        for (int i = 0; i < arrayElements; i++) {
+        for (unsigned char i = 0; i < arrayElements; i++) {
             newArray[i] = array[i];
         }
-
         delete [] array;
         array = newArray;
-    } else if ((arrayElements > DEFAULT_SIZE) && (arrayElements < arrayLength / 2)) {
-        arrayLength = max(DEFAULT_SIZE, arrayLength / 2);
+    } else if ((arrayElements > startSize) && (arrayElements < arrayLength / 2)) {
+        arrayLength = max(startSize, arrayLength / 2);
         T *newArray = new T[arrayLength];
-
-        for (int i = 0; i < arrayElements; i++) {
+        for (unsigned char i = 0; i < arrayElements; i++) {
             newArray[i] = array[i];
         }
-
         delete [] array;
         array = newArray;
     }
+    assert(arrayElements < arrayLength);
 }
 
 template<typename T>
-ArrayList<T>::ArrayList(void)
+ArrayList<T>::ArrayList(const unsigned char startSize)
 {
+    this->startSize = startSize;
     arrayElements = 0;
-    arrayLength = DEFAULT_SIZE;
+    arrayLength = startSize;
     array = new T[arrayLength];
 }
 
 template<typename T>
-T ArrayList<T>::operator[](const int i)
+T& ArrayList<T>::operator[](const unsigned char i)
 {
+    assert(i < arrayLength);
     return array[i];
 }
 
 template<typename T>
-void ArrayList<T>::add(const T t)
+T& ArrayList<T>::get(const unsigned char i)
 {
-    checkDimension();
-    array[arrayElements++] = t;
+    return (*this)[i];
 }
 
 template<typename T>
-void ArrayList<T>::remove(const T t)
+unsigned char ArrayList<T>::add(const T& t)
+{
+    checkDimension();
+    array[arrayElements] = t;
+    return arrayElements++;
+}
+
+template<typename T>
+bool ArrayList<T>::removeAt(const unsigned char i)
+{
+    if (i < arrayElements) {
+        for (unsigned char j = i + 1; j < arrayElements; j++) {
+            array[j - 1] = array[j];
+        }
+        arrayElements--;
+        return true;
+    }
+    return false;
+}
+
+template<typename T>
+bool ArrayList<T>::remove(const T& t)
 {
     bool found = false;
-    int offset = 1;
-    for (int i = 0; i < arrayElements; i++) {
+    unsigned char offset = 1;
+    for (unsigned char i = 0; i < arrayElements; i++) {
         if (found) {
             if (array[i] != t) {
                 array[i - offset] = array[i];
@@ -72,10 +89,12 @@ void ArrayList<T>::remove(const T t)
         arrayElements -= offset;
     }
     checkDimension();
+
+    return found;
 }
 
 template<typename T>
-int ArrayList<T>::length(void)
+unsigned char ArrayList<T>::length(void)
 {
     return arrayElements;
 }
@@ -84,6 +103,12 @@ template<typename T>
 bool ArrayList<T>::isEmpty(void)
 {
     return length() == 0;
+}
+
+template<typename T>
+bool ArrayList<T>::containsSomething(void)
+{
+    return !isEmpty();
 }
 
 template<typename T>

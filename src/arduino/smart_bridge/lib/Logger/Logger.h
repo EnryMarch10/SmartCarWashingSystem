@@ -6,8 +6,41 @@
 class Logger {
 
 public:
-    void log(const String &msg);
-    void debug(const String &msg);
+    /**
+     * Prints log prefix without newline.
+    */
+    void logstrt(void);
+    /**
+     * Prints debug prefix without newline.
+    */
+    void debugstrt(void);
+    /**
+     * Prints log message without prefix and newline.
+    */
+    void log(const String& msg);
+    /**
+     * Prints debug message without prefix and newline.
+    */
+    void debug(const String& msg);
+    /**
+     * Prints log newline.
+    */
+    void logln(void);
+    /**
+     * Prints debug newline.
+    */
+    void debugln(void);
+    /**
+     * Prints log message with format: prefix, message and newline.
+    */
+    void logln(const String& msg);
+    /**
+     * Prints debug message with format: prefix, message and newline.
+    */
+    void debugln(const String& msg);
+    /**
+     * Flushes text in the buffer.
+    */
     void flush(void);
 
 };

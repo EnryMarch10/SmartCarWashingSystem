@@ -1,3 +1,9 @@
 {
-    "cmake.configureOnOpen": false
+    "cmake.configureOnOpen": false,
+    "cSpell.words": [
+        "debugln",
+        "debugstrt",
+        "logln",
+        "logstrt"
+    ]
 }

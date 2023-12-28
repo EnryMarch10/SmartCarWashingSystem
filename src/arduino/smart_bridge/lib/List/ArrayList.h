@@ -7,17 +7,23 @@ template<typename T>
 class ArrayList {
 
 public:
-    ArrayList(void);
-    T operator[](const int i);
-    void add(const T t);
-    void remove(const T t);
-    int length(void);
+    ArrayList(void) : ArrayList(6) { }
+    ArrayList(const unsigned char startSize);
+    T& operator[](const unsigned char i);
+    T& get(const unsigned char i);
+    unsigned char add(const T& t);
+    bool removeAt(const unsigned char i);
+    bool remove(const T& t);
+    unsigned char length(void);
     bool isEmpty(void);
+    bool containsSomething(void);
     ~ArrayList(void);
 
 private:
+    unsigned char startSize;
+    unsigned char arrayLength, arrayElements;
     T *array;
-    int arrayLength, arrayElements;
+
     void checkDimension();
 
 };

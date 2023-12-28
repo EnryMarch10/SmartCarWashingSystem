@@ -32,12 +32,14 @@ public:
     Msg* currentMsg;
     bool msgAvailable;
 
-    void init();
-    bool isMsgAvailable();
-    bool isMsgAvailable(Pattern &pattern);
-    Msg *receiveMsg();
-    Msg *receiveMsg(Pattern &pattern);
-    void sendMsg(const String &msg);
+    void init(void);
+    bool isMsgAvailable(void);
+    bool isMsgAvailable(Pattern& pattern);
+    Msg *receiveMsg(void);
+    Msg *receiveMsg(Pattern& pattern);
+    void sendMsg(const String& msg);
+    void sendMsgLine(const String& msg);
+    void sendMsgLine(void);
     void flush(void);
 
 };

@@ -3,7 +3,7 @@
 
 static void _wakeup_handler(void)
 {
-    MyLogger.debug(F("PIR detected something!"));
+    MyLogger.debugln(F("PIR detected something!"));
     disable_all_interrupts();
 }
 
@@ -16,14 +16,14 @@ void SleepTask::init(void) { }
 
 void SleepTask::tick(void)
 {
-    MyLogger.debug(getPrefix() + F("Going to sleep..."));
+    MyLogger.debugln(getPrefix() + F("Going to sleep..."));
     MyLogger.flush();
     enable_interrupt(pirPin, _wakeup_handler, RISING);
     set_sleep_mode(SLEEP_MODE_PWR_DOWN);
     sleep_enable();
     sleep_mode();
     sleep_disable();
-    MyLogger.debug(getPrefix() + F("Waking up..."));
+    MyLogger.debugln(getPrefix() + F("Waking up..."));
     MyScheduler.addPeriodicTask(MyTasksFactory.createWelcomeTask());
 }
 

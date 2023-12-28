@@ -8,15 +8,18 @@
 
 #define __DEBUG__
 
-#ifdef __DEBUG__
-    #include <assert.h>
-#endif
+#include <assert.h>
 
 #define TASK_BORN F("task born")
 #define TASK_INIT F("task init")
 #define TASK_DIE F("task die")
 #define TASK_STOP F("task stop")
 #define TASK_RESUME F("task resume")
+
+#define PREFIX_LOG F("log> ")
+#ifdef __DEBUG__
+#define PREFIX_DEBUG F("debug> ")
+#endif
 
 #define XOR_SWAP(X, Y)  {\
                             (X) ^= (Y);\
@@ -29,6 +32,8 @@
                                 (X) = (Y);\
                                 (Y) = (tmp);\
                             }
+
+#define ABS_DIFF(x, y) ((x) > (y) ? (x) - (y) : (y) - (x))
 
 template<class T>
 void swap(T &a, T &b)

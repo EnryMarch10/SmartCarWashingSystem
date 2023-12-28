@@ -1,5 +1,4 @@
 #include "MsgService.h"
-#include "utils.h"
 
 #define BUFFER_SIZE 256
 
@@ -34,9 +33,19 @@ void MsgServiceClass::init(void)
     msgAvailable = false;  
 }
 
-void MsgServiceClass::sendMsg(const String &msg)
+void MsgServiceClass::sendMsg(const String& msg)
+{ 
+    Serial.print(msg);
+}
+
+void MsgServiceClass::sendMsgLine(const String& msg)
 { 
     Serial.println(msg);
+}
+
+void MsgServiceClass::sendMsgLine(void)
+{ 
+    Serial.println();
 }
 
 void MsgServiceClass::flush(void)
@@ -57,12 +66,12 @@ void serialEvent(void)
     }
 }
 
-bool MsgServiceClass::isMsgAvailable(Pattern &pattern)
+bool MsgServiceClass::isMsgAvailable(Pattern& pattern)
 {
     return (msgAvailable && pattern.match(*currentMsg));
 }
 
-Msg *MsgServiceClass::receiveMsg(Pattern &pattern)
+Msg *MsgServiceClass::receiveMsg(Pattern& pattern)
 {
     if (msgAvailable && pattern.match(*currentMsg)) {
         Msg *msg = currentMsg;
