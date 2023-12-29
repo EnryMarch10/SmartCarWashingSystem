@@ -11,7 +11,7 @@ class PeriodicTask: public ObservableTask, public TaskObserver {
 public:
     virtual void tick(void) = 0;
 
-    void init(const int period)
+    void init(const unsigned period)
     {
         MyLogger.debugln(getPrefix() + TASK_INIT);
         myPeriod = period;
@@ -21,12 +21,12 @@ public:
 
     virtual void laterInit(void) = 0;
 
-    int getPeriod(void)
+    unsigned getPeriod(void)
     {
         return myPeriod;
     }
 
-    bool updateAndCheckTime(const int basePeriod)
+    bool updateAndCheckTime(const unsigned basePeriod)
     {
         timeElapsed += basePeriod;
         if (timeElapsed >= myPeriod) {
@@ -67,8 +67,8 @@ public:
 
 private:
     bool active = true;
-    int myPeriod;
-    int timeElapsed;
+    unsigned myPeriod;
+    unsigned timeElapsed;
 
 };
 

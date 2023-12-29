@@ -24,7 +24,7 @@ void SleepTask::tick(void)
     sleep_mode();
     sleep_disable();
     MyLogger.debugln(getPrefix() + F("Waking up..."));
-    MyScheduler.addPeriodicTask(MyTasksFactory.createWelcomeTask());
+    MyScheduler.periodicTaskReadyToAdd(MyTasksFactory.createWelcomeTask());
 }
 
 SleepTask::~SleepTask(void) { }

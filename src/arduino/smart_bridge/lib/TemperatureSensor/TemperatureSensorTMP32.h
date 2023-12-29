@@ -8,7 +8,7 @@ class TemperatureSensorTMP32: public TemperatureSensor {
 public:
     TemperatureSensorTMP32(const int pin);
     float getTemperature(void);
-    ~TemperatureSensorTMP32() {};
+    ~TemperatureSensorTMP32(void) { }
 
 private:
     int pin;

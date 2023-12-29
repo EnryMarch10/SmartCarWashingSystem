@@ -8,7 +8,7 @@ class PresenceSensorImpl: public PresenceSensor {
 public:
     PresenceSensorImpl(const int pin);
     bool detected(void);
-    ~PresenceSensorImpl() {};
+    ~PresenceSensorImpl(void) {};
 
 private:
     int pin;

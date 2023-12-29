@@ -12,7 +12,7 @@ public:
     void switchOn(void);
     void switchOff(void);
     void toggle(void);
-    ~Led() {};
+    ~Led(void) { }
 
 private:
     void setHigh(void);

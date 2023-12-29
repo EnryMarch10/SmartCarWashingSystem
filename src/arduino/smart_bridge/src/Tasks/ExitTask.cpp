@@ -17,24 +17,25 @@ void ExitTask::laterInit(void)
     pGateOpenTask = MyTasksFactory.createGateOpenTask();
     pGateOpenTask->addListener(this);
     stop();
-    MyScheduler.addPeriodicTask(pGateOpenTask);
+    MyScheduler.periodicTaskReadyToAdd(pGateOpenTask);
 }
 
 void ExitTask::tick(void)
 {
     static long timeElapsed;
-    MyLogger.debugln(getPrefix() + F("car distance = ") + pSonar->getDistance() + F(" m"));
+    const float distance = pSonar->getDistance();
+    MyLogger.debugln(getPrefix() + F("car distance = ") + distance + F(" m"));
     switch (carState)
     {
         case IN:
-            if (pSonar->getDistance() >= MAX_DIST) {
+            if ((distance >= MAX_DIST) || (distance == Sonar::getErrorDistance())) {
                 carState = OUT;
                 timeElapsed = millis();
                 MyLogger.debugln(getPrefix() + F("CAR OUT"));
             }
             break;
         case OUT:
-            if (pSonar->getDistance() < MAX_DIST) {
+            if ((distance < MAX_DIST) && (distance != Sonar::getErrorDistance())) {
                 carState = IN;
                 MyLogger.debugln(getPrefix() + F("CAR IN"));
             } else if (millis() - timeElapsed >= enterTime) {
@@ -42,7 +43,7 @@ void ExitTask::tick(void)
                 pGateCloseTask = MyTasksFactory.createGateCloseTask();
                 stop();
                 pGateCloseTask->addListener(this);
-                MyScheduler.addPeriodicTask(pGateCloseTask);
+                MyScheduler.periodicTaskReadyToAdd(pGateCloseTask);
             }
             break;
     }
@@ -55,8 +56,8 @@ void ExitTask::update(Task *pTask)
         pGateOpenTask = NULL;
     } else if (pTask == pGateCloseTask) {
         pLight->switchOff();
-        MyScheduler.taskReadyToDie(this);
-        MyScheduler.addAperiodicTask(MyTasksFactory.createSleepTask());
+        MyScheduler.periodicTaskReadyToDie(this);
+        MyScheduler.aperiodicTaskAdd(MyTasksFactory.createSleepTask());
         pGateCloseTask = NULL;
     }
 }

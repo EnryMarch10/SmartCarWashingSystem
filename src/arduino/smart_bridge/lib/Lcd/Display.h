@@ -13,7 +13,7 @@ public:
     virtual void off(void) = 0;
     virtual void clear(void) = 0;
     virtual void write(const String &string) = 0;
-    virtual ~Display(void) {};
+    virtual ~Display(void) { }
 
 };
 

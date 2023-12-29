@@ -28,9 +28,8 @@ public:
      * - switches the led off if current state is on.
     */
     virtual void toggle(void) = 0;
-    virtual ~Light() {};
+    virtual ~Light(void) { }
 
 };
 
 #endif
-

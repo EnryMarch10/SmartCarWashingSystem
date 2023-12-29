@@ -23,7 +23,7 @@ public:
      * Turns off the motor.
     */
     virtual void off(void) = 0;
-    virtual ~ServoMotor() {};
+    virtual ~ServoMotor(void) { }
 
 };
 

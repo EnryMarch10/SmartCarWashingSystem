@@ -36,7 +36,7 @@ static unsigned int func(Integer &value) {
     return value.get();
 }
 
-OrderedSet<Integer> *set;
+OrderedSet<Integer, unsigned> *set;
 char buf[20];
 
 void setUp(void)
@@ -91,7 +91,7 @@ void loop()
     i++;
 
     randomSeed(analogRead(RANDOM_PORT));
-    set = new OrderedSet<Integer>(func);
+    set = new OrderedSet<Integer, unsigned>(func);
 
     for (int j = 0; j < CYCLE_ITERATIONS; j++) {
         RUN_TEST(iterate);

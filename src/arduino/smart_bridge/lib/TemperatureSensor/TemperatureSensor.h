@@ -10,7 +10,7 @@ public:
      * Retrieves temperature in degrees Celsius.
     */
     virtual float getTemperature(void) = 0;
-    virtual ~TemperatureSensor() {};
+    virtual ~TemperatureSensor(void) { }
 
 };
 

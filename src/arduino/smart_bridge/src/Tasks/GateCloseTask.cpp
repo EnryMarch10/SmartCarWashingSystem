@@ -13,7 +13,7 @@ void GateCloseTask::laterInit(void)
 void GateCloseTask::tick(void)
 {
     if (pGate->close()) {
-        MyScheduler.taskReadyToDie(this);
+        MyScheduler.periodicTaskReadyToDie(this);
     }
 }
 

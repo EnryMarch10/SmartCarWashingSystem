@@ -7,7 +7,7 @@ class Button {
 
 public:
     virtual bool isPressed(void) = 0;
-    virtual ~Button() {};
+    virtual ~Button(void) { }
 
 };
 

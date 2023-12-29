@@ -16,7 +16,7 @@ public:
     // GATE
     bool open(void);
     bool close(void);
-    ~ServoMotorImpl();
+    ~ServoMotorImpl(void);
 
 private:
     bool isFullyOpen(void);

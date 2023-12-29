@@ -43,7 +43,7 @@ float SonarImpl::getDistance(void)
     float tUS = pulseIn(echoPin, HIGH);
 
     if (tUS <= 0) {
-        return DETECTION_ERROR;
+        return getErrorDistance();
     }
     float t = tUS / 2000000.0;
     float d = t * vs;

@@ -16,7 +16,7 @@ public:
     virtual bool close(void) = 0;
     virtual void on(void) = 0;
     virtual void off(void) = 0;
-    virtual ~Gate() { };
+    virtual ~Gate(void) { }
 
 };
 

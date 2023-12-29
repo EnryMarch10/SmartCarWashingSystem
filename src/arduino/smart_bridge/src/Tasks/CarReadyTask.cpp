@@ -15,15 +15,15 @@ void CarReadyTask::laterInit(void)
     PeriodicTask *pTask = MyTasksFactory.createGateCloseTask();
     pTask->addListener(this);
     stop();
-    MyScheduler.addPeriodicTask(pTask);
+    MyScheduler.periodicTaskReadyToAdd(pTask);
 }
 
 void CarReadyTask::tick(void)
 {
     if (pButton->isPressed()) {
         pDisplay->off();
-        MyScheduler.taskReadyToDie(this);
-        MyScheduler.addPeriodicTask(MyTasksFactory.createCountDownTask());
+        MyScheduler.periodicTaskReadyToDie(this);
+        MyScheduler.periodicTaskReadyToAdd(MyTasksFactory.createCountDownTask());
     }
 }
 

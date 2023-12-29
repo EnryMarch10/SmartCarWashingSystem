@@ -14,22 +14,24 @@ public:
 
 };
 
-template<typename T>
+template<typename T, typename K>
 class OrderedSet: public BaseOrderedSet {
 
 public:
-    OrderedSet(unsigned (*const posStrategy)(T& value))
+    OrderedSet(K (*const posStrategy)(T& value))
     {
         list = new ArrayList<T>();
         this->valueFunc = posStrategy;
     }
-    OrderedSet(unsigned (*const posStrategy)(T& value), const unsigned char startSize)
+    OrderedSet(K (*const posStrategy)(T& value), const unsigned char startSize)
     {
         list = new ArrayList<T>(startSize);
         this->valueFunc = posStrategy;
     }
     T& operator[](const unsigned char i);
     T& get(const unsigned char i);
+    T& getFirst(void);
+    unsigned char getFirstPos(void);
     int add(T& t);
     bool removeAt(const unsigned char i);
     bool remove(T& t);
@@ -40,10 +42,16 @@ public:
 
 private:
     ArrayList<T> *list;
-    unsigned (*valueFunc)(T& value);
+    K (*valueFunc)(T& value);
+    typedef struct Distance
+    {
+        K diff;
+        int index;
+    }
+    Distance;
 
-    int binary_search(ArrayList<T>& array, T& value);
-    int binary_search_nearest(ArrayList<T>& array, T& value);
+    int binary_search(ArrayList<T>& array, T& item);
+    int binary_search_nearest(ArrayList<T>& array, T& item);
 
 };
 

@@ -4,7 +4,7 @@ void setup()
 {
     init_config();
     MyScheduler.init(BASE_PERIOD);
-    MyScheduler.addAperiodicTask(MyTasksFactory.createSleepTask());
+    MyScheduler.aperiodicTaskAdd(MyTasksFactory.createSleepTask());
 }
 
 void loop()

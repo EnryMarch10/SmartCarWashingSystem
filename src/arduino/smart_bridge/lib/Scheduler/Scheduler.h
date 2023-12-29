@@ -5,29 +5,29 @@
 #include "PeriodicTask.h"
 #include "AperiodicTask.h"
 #include "Queue.h"
-
-#define MAX_PERIODIC_TASKS 50
+#include "OrderedSet.h"
 
 class Scheduler {
 
 public:
     Scheduler(void);
     void init(const int basePeriod);
-    bool addAperiodicTask(AperiodicTask *task);
-    bool addPeriodicTask(PeriodicTask *task);
-    void taskReadyToDie(PeriodicTask *finished);
+    bool aperiodicTaskAdd(AperiodicTask *task);
+    bool periodicTaskReadyToAdd(PeriodicTask *task);
+    void periodicTaskReadyToDie(PeriodicTask *task);
     void schedule(void);
     ~Scheduler(void);
 
 private:
     int basePeriod;
-    int pNTasks;
-    PeriodicTask *pTaskList[MAX_PERIODIC_TASKS];
+    OrderedSet<PeriodicTask *, unsigned> *pTaskSet;
+    Queue<PeriodicTask *> *pTaskAskedToBeAddedQueue;
     Queue<AperiodicTask *> *aTaskQueue;
-    Queue<PeriodicTask *> *askedToDieQueue;
+    Queue<PeriodicTask *> *pTaskAskedToDieQueue;
 
     void runPeriodicTasks(void);
     void runAperiodicTasks(void);
+    bool addPeriodicTask(PeriodicTask *task);
     bool removePeriodicTask(PeriodicTask *task);
 
 };

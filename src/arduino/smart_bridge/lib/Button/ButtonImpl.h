@@ -8,7 +8,7 @@ class ButtonImpl: public Button {
 public:
     ButtonImpl(const int pin);
     bool isPressed(void);
-    ~ButtonImpl() {};
+    ~ButtonImpl(void) { }
 
 private:
     int pin;

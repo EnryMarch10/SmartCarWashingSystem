@@ -22,6 +22,12 @@ bool Queue<T>::isEmpty(void)
 }
 
 template <typename T>
+bool Queue<T>::containsSomething(void)
+{
+    return !isEmpty();
+}
+
+template <typename T>
 void Queue<T>::enqueue(const T& obj)
 {
     Node* tmp = NULL;

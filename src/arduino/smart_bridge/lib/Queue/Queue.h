@@ -9,6 +9,7 @@ class Queue {
 public:
     Queue(void);
     bool isEmpty(void);
+    bool containsSomething(void);
     void enqueue(const T& obj);
     T dequeue(void);
     ~Queue(void);

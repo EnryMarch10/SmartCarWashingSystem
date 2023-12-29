@@ -19,8 +19,8 @@ void WelcomeTask::tick(void)
     if (cycles == 0) {
         pLight->switchOff();
         pDisplay->off();
-        MyScheduler.taskReadyToDie(this);
-        MyScheduler.addPeriodicTask(MyTasksFactory.createEnterTask());
+        MyScheduler.periodicTaskReadyToDie(this);
+        MyScheduler.periodicTaskReadyToAdd(MyTasksFactory.createEnterTask());
     }
     cycles--;
 }

@@ -10,7 +10,7 @@ public:
      * Tells if movement detected.
     */
     virtual bool detected(void) = 0;
-    virtual ~PresenceSensor() {};
+    virtual ~PresenceSensor(void) {};
 
 };
 

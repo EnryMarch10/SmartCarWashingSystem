@@ -11,9 +11,9 @@ void CountDownTask::laterInit(void)
     pDisplay->on();
     pDisplay->write(String(cycles));
     pBlinkTask = MyTasksFactory.createSlowBlinkTask();
-    MyScheduler.addPeriodicTask(pBlinkTask);
+    MyScheduler.periodicTaskReadyToAdd(pBlinkTask);
     pMonitorTask = MyTasksFactory.createMonitorTask(this, pBlinkTask);
-    MyScheduler.addPeriodicTask(pMonitorTask);
+    MyScheduler.periodicTaskReadyToAdd(pMonitorTask);
 }
 
 void CountDownTask::inStop(void)
@@ -33,10 +33,10 @@ void CountDownTask::tick(void)
     pDisplay->write(String(cycles));
     if (cycles == 0) {
         pDisplay->off();
-        MyScheduler.taskReadyToDie(pBlinkTask);
-        MyScheduler.taskReadyToDie(pMonitorTask);
-        MyScheduler.taskReadyToDie(this);
-        MyScheduler.addPeriodicTask(MyTasksFactory.createExitTask());
+        MyScheduler.periodicTaskReadyToDie(pBlinkTask);
+        MyScheduler.periodicTaskReadyToDie(pMonitorTask);
+        MyScheduler.periodicTaskReadyToDie(this);
+        MyScheduler.periodicTaskReadyToAdd(MyTasksFactory.createExitTask());
     }
 }
 
