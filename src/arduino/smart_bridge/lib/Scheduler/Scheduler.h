@@ -5,7 +5,7 @@
 #include "PeriodicTask.h"
 #include "AperiodicTask.h"
 #include "Queue.h"
-#include "OrderedSet.h"
+#include "OrderedList.h"
 
 class Scheduler {
 
@@ -20,10 +20,10 @@ public:
 
 private:
     int basePeriod;
-    OrderedSet<PeriodicTask *, unsigned> *pTaskSet;
-    Queue<PeriodicTask *> *pTaskAskedToBeAddedQueue;
-    Queue<AperiodicTask *> *aTaskQueue;
-    Queue<PeriodicTask *> *pTaskAskedToDieQueue;
+    Queue<AperiodicTask *> *aTasks;
+    OrderedList<PeriodicTask *, unsigned> *pTasks;
+    Queue<PeriodicTask *> *pTasksToAdd;
+    Queue<PeriodicTask *> *pTasksToRemove;
 
     void runPeriodicTasks(void);
     void runAperiodicTasks(void);

@@ -22,7 +22,7 @@ static void _timer_handler(void)
     timerFlag = true;
 }
 
-static void _print_task_list(OrderedSet<PeriodicTask *, unsigned> *& tasks)
+static void _print_task_list(OrderedList<PeriodicTask *, unsigned> *& tasks)
 {
 #ifdef __DEBUG__
     static const __FlashStringHelper *start = F("---- START periodic tasks ----");
@@ -43,10 +43,10 @@ static unsigned func(PeriodicTask *& pTask) {
 Scheduler::Scheduler(void)
 {
     MyLogger.debugln(getPrefix() + F("born"));
-    pTaskSet = new OrderedSet<PeriodicTask *, unsigned>(func);
-    aTaskQueue = new Queue<AperiodicTask *>();
-    pTaskAskedToBeAddedQueue = new Queue<PeriodicTask *>();
-    pTaskAskedToDieQueue = new Queue<PeriodicTask *>();
+    aTasks = new Queue<AperiodicTask *>();
+    pTasks = new OrderedList<PeriodicTask *, unsigned>(func);
+    pTasksToAdd = new Queue<PeriodicTask *>();
+    pTasksToRemove = new Queue<PeriodicTask *>();
 }
 
 void Scheduler::init(const int basePeriod)
@@ -62,7 +62,7 @@ void Scheduler::init(const int basePeriod)
 bool Scheduler::aperiodicTaskAdd(AperiodicTask *task)
 {
     MyLogger.debugln(getPrefix() + F("add aperiodic ") + task->getName());
-    aTaskQueue->enqueue(task);
+    aTasks->enqueue(task);
     return true;
 }
 
@@ -70,7 +70,7 @@ bool Scheduler::periodicTaskReadyToAdd(PeriodicTask *task)
 {
     assert(task->getPeriod() % basePeriod == 0);
     MyLogger.debugln(getPrefix() + F("asked to be added periodic ") + task->getName());
-    pTaskAskedToBeAddedQueue->enqueue(task);
+    pTasksToAdd->enqueue(task);
     return true;
 }
 
@@ -78,56 +78,68 @@ void Scheduler::periodicTaskReadyToDie(PeriodicTask *task)
 {
     task->stop();
     MyLogger.debugln(getPrefix() + F("stopped and put in die queue ") + task->getName());
-    pTaskAskedToDieQueue->enqueue(task);
+    pTasksToRemove->enqueue(task);
 }
 
 bool Scheduler::addPeriodicTask(PeriodicTask *task)
 {
     MyLogger.debugln(getPrefix() + F("add periodic ") + task->getName());
-    const int result = pTaskSet->add(task);
-    _print_task_list(pTaskSet);
-    return result != BaseOrderedSet::getErrorIndex();
+    pTasks->add(task);
+    return true;
 }
 
 bool Scheduler::removePeriodicTask(PeriodicTask *task)
 {
     MyLogger.debugln(getPrefix() + F("remove periodic ") + task->getName());
-    const bool result = pTaskSet->remove(task);
+    const bool result = pTasks->remove(task);
     delete task;
-    _print_task_list(pTaskSet);
     return result;
 }
 
 void Scheduler::runPeriodicTasks(void)
 {
-    for (unsigned char i = 0; i < pTaskSet->length(); i++) {
-        if (pTaskSet->get(i)->updateAndCheckTime(basePeriod)) {
-            if (pTaskSet->get(i)->isActive()) {
-                // MyLogger.debugln(getPrefix() + F("executing periodic ")) + pTaskSet->get(i)->getName());
-                pTaskSet->get(i)->tick();
+    for (unsigned char i = 0; i < pTasks->length(); i++) {
+        if (pTasks->get(i)->updateAndCheckTime(basePeriod)) {
+            if (pTasks->get(i)->isActive()) {
+                // MyLogger.debugln(getPrefix() + F("executing periodic ")) + pTasks->get(i)->getName());
+                pTasks->get(i)->tick();
             }
 #ifdef __DEBUG__
             else {
-                MyLogger.debugln(getPrefix() + F("skipped inactive periodic ") + pTaskSet->get(i)->getName());
+                MyLogger.debugln(getPrefix() + F("skipped inactive periodic ") + pTasks->get(i)->getName());
             }
 #endif
         }
     }
 
+#ifdef __DEBUG__
+    bool updateTasks = false;
+#endif
     // Remove if asked to die
-    while (pTaskAskedToDieQueue->containsSomething()) {
-        removePeriodicTask(pTaskAskedToDieQueue->dequeue());
+    while (pTasksToRemove->containsSomething()) {
+        removePeriodicTask(pTasksToRemove->dequeue());
+#ifdef __DEBUG__
+        updateTasks = true;
+#endif
     }
     // Add if asked to be added
-    while (pTaskAskedToBeAddedQueue->containsSomething()) {
-        addPeriodicTask(pTaskAskedToBeAddedQueue->dequeue());
+    while (pTasksToAdd->containsSomething()) {
+        addPeriodicTask(pTasksToAdd->dequeue());
+#ifdef __DEBUG__
+        updateTasks = true;
+#endif
     }
+#ifdef __DEBUG__
+        if (updateTasks) {
+            _print_task_list(pTasks);
+        }
+#endif
 }
 
 void Scheduler::runAperiodicTasks(void)
 {
-    while (aTaskQueue->containsSomething()) {
-        Task *const task = aTaskQueue->dequeue();
+    while (aTasks->containsSomething()) {
+        Task *const task = aTasks->dequeue();
         MyLogger.debugln(getPrefix() + F("executing aperiodic ") + task->getName());
         task->tick();
         delete task;
@@ -147,14 +159,14 @@ void Scheduler::schedule(void)
 Scheduler::~Scheduler(void)
 {
     MyLogger.debugln(getPrefix() + F("die!"));
-    while (pTaskSet->containsSomething()) {
-        delete pTaskSet->getFirst();
-        pTaskSet->removeAt(pTaskSet->getFirstPos());
+    while (pTasks->containsSomething()) {
+        delete pTasks->getFirst();
+        pTasks->removeAt(pTasks->getFirstPos());
     }
-    delete pTaskSet;
-    delete pTaskAskedToDieQueue;
-    while (pTaskAskedToBeAddedQueue->containsSomething()) {
-        delete pTaskAskedToBeAddedQueue->dequeue();
+    delete pTasks;
+    delete pTasksToRemove;
+    while (pTasksToAdd->containsSomething()) {
+        delete pTasksToAdd->dequeue();
     }
-    delete pTaskAskedToBeAddedQueue;
+    delete pTasksToAdd;
 }

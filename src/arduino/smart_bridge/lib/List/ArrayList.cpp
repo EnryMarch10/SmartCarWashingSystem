@@ -4,6 +4,12 @@
 #include "ArrayList.h"
 
 template<typename T>
+int ArrayList<T>::getErrorIndex(void)
+{
+    return -1;
+}
+
+template<typename T>
 void ArrayList<T>::checkDimension(void)
 {
     if (arrayElements == arrayLength) {
@@ -27,11 +33,11 @@ void ArrayList<T>::checkDimension(void)
 }
 
 template<typename T>
-ArrayList<T>::ArrayList(const unsigned char startSize)
+ArrayList<T>::ArrayList(const unsigned char size)
 {
-    this->startSize = startSize;
+    this->startSize = size;
     arrayElements = 0;
-    arrayLength = startSize;
+    arrayLength = size;
     array = new T[arrayLength];
 }
 
@@ -49,7 +55,31 @@ T& ArrayList<T>::get(const unsigned char i)
 }
 
 template<typename T>
-unsigned char ArrayList<T>::add(const T& t)
+T& ArrayList<T>::getFirst(void)
+{
+    return (*this)[getFirstPos()];
+}
+
+template<typename T>
+T& ArrayList<T>::getLast(void)
+{
+    return (*this)[getLastPos()];
+}
+
+template<typename T>
+unsigned char ArrayList<T>::getFirstPos(void)
+{
+    return 0;
+}
+
+template<typename T>
+unsigned char ArrayList<T>::getLastPos(void)
+{
+    return arrayElements - 1;
+}
+
+template<typename T>
+unsigned char ArrayList<T>::add(T& t)
 {
     checkDimension();
     array[arrayElements] = t;
@@ -70,7 +100,16 @@ bool ArrayList<T>::removeAt(const unsigned char i)
 }
 
 template<typename T>
-bool ArrayList<T>::remove(const T& t)
+bool ArrayList<T>::removeAt(const int i)
+{
+    if (i == getErrorIndex()) {
+        return false;
+    }
+    return removeAt((unsigned char) i);
+}
+
+template<typename T>
+bool ArrayList<T>::remove(T& t)
 {
     bool found = false;
     unsigned char offset = 1;

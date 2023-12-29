@@ -8,16 +8,24 @@ class ArrayList {
 
 public:
     ArrayList(void) : ArrayList(6) { }
-    ArrayList(const unsigned char startSize);
+    ArrayList(const unsigned char size);
     T& operator[](const unsigned char i);
     T& get(const unsigned char i);
-    unsigned char add(const T& t);
+    T& getFirst(void);
+    T& getLast(void);
+    unsigned char getFirstPos(void);
+    unsigned char getLastPos(void);
+    virtual unsigned char add(T& t);
     bool removeAt(const unsigned char i);
-    bool remove(const T& t);
+    virtual bool remove(T& t);
     unsigned char length(void);
     bool isEmpty(void);
     bool containsSomething(void);
-    ~ArrayList(void);
+    virtual ~ArrayList(void);
+
+protected:
+    int getErrorIndex(void);
+    bool removeAt(const int i);
 
 private:
     unsigned char startSize;

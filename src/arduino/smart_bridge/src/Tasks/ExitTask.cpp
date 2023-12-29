@@ -6,7 +6,7 @@ ExitTask::ExitTask(Light *pLight, Display *pDisplay, Sonar *pSonar, unsigned int
     this->pSonar = pSonar;
     this->enterTime = enterTime;
     this->pLight = pLight;
-    carState = OUT;
+    carState = IN;
 }
 
 void ExitTask::laterInit(void)

@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <unity.h>
 
-#include "OrderedSet.h"
+#include "OrderedList.h"
 
 #define N 100
 #define RANDOM_PORT A3
@@ -25,6 +25,10 @@ public:
     {
         return this == &rhs;
     }
+    bool operator!=(const Integer& rhs) const
+    {
+        return !(*this == rhs);
+    }
     ~Integer(void) { }
 
 private:
@@ -36,7 +40,7 @@ static unsigned int func(Integer &value) {
     return value.get();
 }
 
-OrderedSet<Integer, unsigned> *set;
+OrderedList<Integer, unsigned> *list;
 char buf[20];
 
 void setUp(void)
@@ -52,19 +56,23 @@ void tearDown(void)
 
 void order(void)
 {
-    int min;
-    if (set->length() > 0) {
-        min = set->get(0).get();
+    int last;
+    if (list->containsSomething()) {
+        last = list->getFirst().get();
     }
-    for (unsigned char i = 0; i < set->length(); i++) {
-        TEST_ASSERT_FALSE_MESSAGE(set->get(0).get() < min, "Order error");
+    for (unsigned char i = 0; i < list->length(); i++) {
+        const int value = list->get(i).get();
+        TEST_ASSERT_LESS_OR_EQUAL_MESSAGE(value, last, "Order error");
+        if (last < value) {
+            last = value;
+        }
     }
 }
 
 void deletions(void)
 {
-    while (set->length() > 0) {
-        TEST_ASSERT_TRUE_MESSAGE(set->remove(set->get(0)), "Error in removing element");
+    while (list->containsSomething()) {
+        TEST_ASSERT_TRUE_MESSAGE(list->remove(list->get(0)), "Error in removing element");
     }
 }
 
@@ -72,11 +80,7 @@ static void iterate(void) {
     static int i = 0;
     i++;
     Integer n(random(MIN_NUM, MAX_NUM) / 2);
-    const int result = set->add(n);
-    TEST_ASSERT_NOT_EQUAL_MESSAGE(BaseOrderedSet::getErrorIndex(), result, "Error in inserting element");
-    if (i % 5 == 0) {
-        TEST_ASSERT_EQUAL_MESSAGE(BaseOrderedSet::getErrorIndex(), set->add(set->get(result)), "Accepted two equal items in set");
-    }
+    list->add(n);
 }
 
 void setup()
@@ -91,10 +95,10 @@ void loop()
     i++;
 
     randomSeed(analogRead(RANDOM_PORT));
-    set = new OrderedSet<Integer, unsigned>(func);
+    list = new OrderedList<Integer, unsigned>(func);
 
     for (int j = 0; j < CYCLE_ITERATIONS; j++) {
-        RUN_TEST(iterate);
+        iterate();
     }
 
     UNITY_PRINT_EOL();
@@ -103,13 +107,13 @@ void loop()
     UnityPrint(" ///");
     UNITY_PRINT_EOL();
     UnityPrint("length = ");
-    UnityPrintNumber(set->length());
+    UnityPrintNumber(list->length());
     UNITY_PRINT_EOL();
     UnityPrint("[");
-    UnityPrintNumber(set->get(0).get());
-    for (int i = 1; i < set->length(); i++) {
+    UnityPrintNumber(list->getFirst().get());
+    for (int i = 1; i < list->length(); i++) {
         UnityPrint(", ");
-        UnityPrintNumber(set->get(i).get());
+        UnityPrintNumber(list->get(i).get());
     }
     UnityPrint("]");
     UNITY_PRINT_EOL();
@@ -117,7 +121,7 @@ void loop()
     RUN_TEST(order);
     RUN_TEST(deletions);
 
-    delete set;
+    delete list;
 
     if (i > N) {
         UNITY_PRINT_EOL();
