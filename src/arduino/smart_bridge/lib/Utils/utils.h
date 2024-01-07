@@ -5,10 +5,9 @@
 #define __UTILS__
 
 #include <Arduino.h>
-
-#define __DEBUG__
-
 #include <assert.h>
+
+// #define __DEBUG__
 
 #define TASK_BORN F("task born")
 #define TASK_INIT F("task init")

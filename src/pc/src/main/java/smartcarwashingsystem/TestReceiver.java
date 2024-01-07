@@ -108,9 +108,9 @@ public final class TestReceiver {
                         }
                         int washes = 0;
                         try {
-                            washes = Integer.parseInt(msgT[1]);
+                            washes = Integer.parseInt(msgT[1].trim());
                         } catch (final NumberFormatException e) {
-                            System.err.println("Non numeric baud rate, " + INFO); // NOPMD
+                            System.err.println("Invalid number of washes, number was \"" + msgT[1] + "\""); // NOPMD
                             System.exit(-1);
                         }
                         console.printf("ACCEPTED => washes = " + washes + System.lineSeparator());
@@ -122,9 +122,9 @@ public final class TestReceiver {
                         }
                         float temperature = Float.MIN_VALUE;
                         try {
-                            temperature = Float.parseFloat(msgT[1]);
-                        } catch (final NumberFormatException e) {
-                            System.err.println("Non numeric baud rate, " + INFO); // NOPMD
+                            temperature = Float.parseFloat(msgT[1].trim());
+                        } catch (final NumberFormatException e) { 
+                            System.err.println("Invalid temperature, number was \"" + msgT[1] + "\""); // NOPMD
                             System.exit(-1);
                         }
                         console.printf("ACCEPTED => T = " + temperature + "/C" + System.lineSeparator());
