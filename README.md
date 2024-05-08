@@ -2,7 +2,7 @@
 
 Second assignment developed on Arduino using vscode with PlatformIO of
 [Embedded Systems and IoT - a.y. 2023-2024](https://www.unibo.it/en/teaching/course-unit-catalogue/course-unit/2023/400396)
-([Computer Science and Engeneering](https://corsi.unibo.it/1cycle/ComputerScienceEngineering)).
+([Computer Science and Engineering](https://corsi.unibo.it/1cycle/ComputerScienceEngineering)).
 
 ## Author
 
