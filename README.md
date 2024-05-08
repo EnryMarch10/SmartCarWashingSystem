@@ -10,7 +10,7 @@ Second assignment developed on Arduino using vscode with PlatformIO of
 
 ## Behavior
 
-We want to realise an embedded system called Smart Car-Washing System.
+We want to realize an embedded system called Smart Car-Washing System.
 The prototype is meant to simulate a simple smart system for car washing.
 
 ![example of circuit layout](img/assignment-2%20result.png)
@@ -60,7 +60,7 @@ MAXDIST for N4 secs. At that point, the gate GATE is closed, L3 is turned off.
 The PC Console Dashboard is meant to be a simple GUI used by car-washing maintainers to monitor the state and functioning of the
 washing system and intervene if necessary:
 
-- In particular, It visualises the total number of washes done so far and  the current state of the washing machine.
+- In particular, It visualizes the total number of washes done so far and  the current state of the washing machine.
 To this purpose, during the washing process the temperature is monitored by means of the TEMP sensor, reporting the ongoing
 value on the PC Console Dashboard;
 - if the temperature becomes greater than MAXTEMP for N4 seconds, then the washing process is suspended and a message
@@ -70,7 +70,7 @@ on the USER LCD;
 (and solved) and the washing process can go on.
 
 Develop the embedded software on Arduino + PC connected through the serial line, implementing the Arduino part in C++/Wiring and
-the PC part in Java or in another favourite language. The Arduino program must be designed and implemented using task-based
+the PC part in Java or in another favorite language. The Arduino program must be designed and implemented using task-based
 architectures and synchronous Finite State Machines.
 
 For any aspect not specified, you are free to choose the approach you consider more useful or valuable.
